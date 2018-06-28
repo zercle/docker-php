@@ -2,8 +2,24 @@
 FROM php:7-fpm
 LABEL maintainer="Kawin Viriyaprasopsook <bouroo@gmail.com>"
 
+ARG	timezone=Asia/Bangkok
+ENV	TERM xterm
+ENV	DEBIAN_FRONTEND noninteractive
+
+ENV	LANG en_US.UTF-8
+ENV	LC_ALL en_US.UTF-8
+ENV	TZ $timezone
+
 # Update OS
 RUN	apt-get update && apt-get -y dist-upgrade
+
+# Change locale
+RUN apt update && apt -y install locales tzdata \
+	&& locale-gen en_US.UTF-8 && locale-gen th_TH.UTF-8 \
+	&& update-locale en_US.UTF-8 \
+	&& echo $timezone > /etc/timezone \
+	&& cp /usr/share/zoneinfo/$timezone /etc/localtime \
+	&& dpkg-reconfigure tzdata
 
 # Copy php.ini
 # modify from https://github.com/php/php-src/blob/master/php.ini-production

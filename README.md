@@ -1,4 +1,4 @@
-# PHP fpm with zts
+# PHP fpm
 * `7-fpm`, `latest` [(7/Dockerfile)](https://github.com/zercle/docker-php/blob/master/7/Dockerfile)
 * `5-fpm` [(5/Dockerfile)](https://github.com/zercle/docker-php/blob/master/5/Dockerfile)
 
