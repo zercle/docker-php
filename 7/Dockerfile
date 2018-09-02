@@ -39,6 +39,7 @@ RUN apt-get update && apt-get install -y \
 	libmemcached-dev \
 	libpng-dev \
 	libpq-dev \
+	libssh2-1-dev \
 	libssl-dev \
 	libxml2-dev \
 	wget \
@@ -64,9 +65,10 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 RUN pecl install memcached \
 	&& pecl install redis \
 	&& pecl install apcu \
+	&& pecl install ssh2-1.1.2 \
 	&& pecl install imagick \
 	&& pecl install mongodb
-RUN docker-php-ext-enable memcached redis apcu imagick mongodb
+RUN docker-php-ext-enable memcached redis apcu ssh2 imagick mongodb
 
 # Composer
 RUN php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php \
