@@ -34,6 +34,7 @@ RUN apt-get update && apt-get install -y \
 	libfreetype6-dev \
 	libgmp-dev \
 	libjpeg-dev \
+	libmagickwand-dev \
 	libmcrypt-dev \
 	libmemcached-dev \
 	libpng-dev \
@@ -52,6 +53,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 	gmp \
 	iconv \
 	json \
+	mbstring \
 	mysqli \
 	pcntl \
 	pdo_mysql \
@@ -60,8 +62,11 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 	sockets \
 	zip
 RUN pecl install memcached \
-	&& pecl install redis
-RUN docker-php-ext-enable memcached redis
+	&& pecl install redis \
+	&& pecl install apcu \
+	&& pecl install imagick \
+	&& pecl install mongodb
+RUN docker-php-ext-enable memcached redis apcu imagick mongodb
 
 # Composer
 RUN php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php \
