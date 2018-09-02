@@ -1,5 +1,5 @@
 # From official php-fpm
-FROM php:7-fpm
+FROM php:7.2-fpm
 LABEL maintainer="Kawin Viriyaprasopsook <bouroo@gmail.com>"
 
 ARG	timezone=Asia/Bangkok
@@ -41,7 +41,8 @@ RUN apt-get update && apt-get install -y \
 	libssl-dev \
 	libxml2-dev \
 	wget \
-	zlib1g-dev
+	zlib1g-dev \
+	nano
 
 # Add PHP ext
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
@@ -58,8 +59,9 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 	soap \
 	sockets \
 	zip
-RUN pecl install memcached
-RUN docker-php-ext-enable memcached
+RUN pecl install memcached \
+	&& pecl install redis
+RUN docker-php-ext-enable memcached redis
 
 # Composer
 RUN php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php \
@@ -68,5 +70,17 @@ RUN php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php
 	&& chmod +x composer.phar \
 	&& mv composer.phar /usr/bin/composer
 
+# ionCube
+RUN wget -c https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz -O ioncube_loaders_lin_x86-64.tar.gz \
+	&& tar -xvzf ioncube_loaders_lin_x86-64.tar.gz \
+	&& cp ioncube/ioncube_loader_lin_7.2.so $(php -r 'echo ini_get("extension_dir");')/ \
+	&& (echo "zend_extension=ioncube_loader_lin_7.2.so" | tee /usr/local/etc/php/conf.d/00-ioncube-loader.ini || true) \
+	&& rm -rf ioncube_loaders_lin_x86-64.tar.gz \
+	&& rm -rf ioncube
+
 # Add global composer bin dir to PATH
 ENV PATH /root/.composer/vendor/bin:$PATH
+
+EXPOSE 9000
+
+CMD ["php-fpm", "-F"]
