@@ -26,7 +26,8 @@ RUN	apt-get update && apt-get -y install locales tzdata \
 # Copy php.ini
 # modify from https://github.com/php/php-src/blob/master/php.ini-production
 COPY	config/php.ini /usr/local/etc/php/
-RUN	chmod 0644 /usr/local/etc/php/php.ini
+RUN	chmod 0644 /usr/local/etc/php/php.ini \
+	&& sed -i 's/access.log/;access.log/g' /usr/local/etc/php-fpm.d/docker.conf
 
 # Add deps
 RUN	apt-get update && apt-get install -y \
