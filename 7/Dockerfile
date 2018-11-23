@@ -34,9 +34,11 @@ RUN	apt-get update && apt-get install -y \
 	default-libmysqlclient-dev \
 	git-core \
 	libbz2-dev \
+	libc-client-dev \
 	libfreetype6-dev \
 	libgmp-dev \
 	libjpeg-dev \
+	libkrb5-dev \
 	libmagickwand-dev \
 	libmcrypt-dev \
 	libmemcached-dev \
