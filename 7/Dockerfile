@@ -56,6 +56,7 @@ RUN	docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 	gd \
 	gmp \
 	iconv \
+	imap \
 	json \
 	mbstring \
 	mysqli \
