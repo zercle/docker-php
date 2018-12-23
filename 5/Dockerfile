@@ -68,6 +68,7 @@ RUN	docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 	pdo_pgsql  \
 	soap \
 	sockets \
+	xmlrpc \
 	zip
 RUN	pecl install memcached-2.2.0 \
 	&& pecl install redis-2.2.8 \
