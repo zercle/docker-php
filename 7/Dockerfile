@@ -1,5 +1,5 @@
 # From official php-fpm
-FROM	php:7.2-fpm
+FROM	php:7.3-fpm
 LABEL	maintainer="Kawin Viriyaprasopsook <bouroo@gmail.com>"
 
 ARG	timezone=Asia/Bangkok
@@ -88,8 +88,8 @@ RUN	php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php
 # ionCube
 RUN	wget -c https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz -O ioncube_loaders_lin_x86-64.tar.gz \
 	&& tar -xvzf ioncube_loaders_lin_x86-64.tar.gz \
-	&& cp ioncube/ioncube_loader_lin_7.2.so $(php -r 'echo ini_get("extension_dir");')/ \
-	&& (echo "zend_extension=ioncube_loader_lin_7.2.so" | tee /usr/local/etc/php/conf.d/00-ioncube-loader.ini || true) \
+	&& cp ioncube/ioncube_loader_lin_7.3.so $(php -r 'echo ini_get("extension_dir");')/ \
+	&& (echo "zend_extension=ioncube_loader_lin_7.3.so" | tee /usr/local/etc/php/conf.d/00-ioncube-loader.ini || true) \
 	&& rm -rf ioncube_loaders_lin_x86-64.tar.gz \
 	&& rm -rf ioncube
 
