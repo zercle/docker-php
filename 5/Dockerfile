@@ -47,7 +47,7 @@ RUN	apt-get update && apt-get install -y \
 	libssh2-1-dev \
 	libssl-dev \
 	libxml2-dev \
-	ibzip-dev \
+	libzip-dev \
 	wget \
 	zlib1g-dev \
 	nano
