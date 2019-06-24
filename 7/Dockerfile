@@ -74,9 +74,14 @@ RUN	docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 RUN	pecl install memcached \
 	&& pecl install redis \
 	&& pecl install apcu \
-	&& pecl install ssh2-1.1.2 \
 	&& pecl install imagick \
 	&& pecl install mongodb
+
+# Install php-ssh2 from source
+RUN	cd /tmp && git clone https://git.php.net/repository/pecl/networking/ssh2.git && cd /tmp/ssh2 \
+	&& phpize && ./configure && make && make install \
+	&& echo "extension=ssh2.so" > /usr/local/etc/php/conf.d/ext-ssh2.ini \
+	&& rm -rf /tmp/ssh2 && cd
 RUN	docker-php-ext-enable memcached redis apcu ssh2 imagick mongodb
 
 # Composer
