@@ -76,7 +76,7 @@ RUN	pecl install memcached-2.2.0 \
 	&& pecl install apcu-4.0.11 \
 	&& pecl install ssh2-0.13 \
 	&& pecl install imagick \
-	&& pecl install mongodb
+	&& pecl install mongodb-1.7.5
 RUN	docker-php-ext-enable memcached redis apcu ssh2 imagick mongodb
 
 # Composer
